@@ -1,5 +1,5 @@
 import multiprocessing
-from mpmath import mp
+from mpmath import mp # type: ignore
 
 precision = 10000000  # precisão desejada
 
