@@ -1,13 +1,9 @@
 import multiprocessing
-from mpmath import mp # type: ignore
+from mpmath import mp
 from mpmath import *
 import random
 import time
 
-# myList = [10, 20, 15, 5, 10000000, 30]
-# ranum = random.randint(0, 5)
-# x = myList[ranum]
-# precision = x  # precisão desejada
 mp.pretty=True
 
 def calculate_pi(x):
@@ -15,34 +11,29 @@ def calculate_pi(x):
     pi = mp.pi
     print("Recurso 1 alocado, processo iniciando.")
     time.sleep(1)
-    print(f"π será calculado:")
+    print(f"Processo 1 (π) será calculado:")
     print(pi)
-    print("Recurso 1 liberado!")
 
 def calc_fib(y):
     mp.dps = y
     fib = fibonacci(101)/fibonacci(100)
     print("Recurso 2 alocado, processo iniciando.")
     time.sleep(2)
-    print("Fibonacci será calculado:")
+    print("Processo 2 (FIBONACCI) será calculado:")
     print(fib)
-    print("Recurso 2 liberado!")
 
 def calc_euler(z):
     mp.dps = z
     euler = mp.e
     print("Recurso 3 alocado, processo iniciando.")
     time.sleep(3)
-    print("Euler será calculado:")
+    print("Processo 3 (EULER) será calculado:")
     print(euler)
-    print("Recurso 3 liberado!")
-
 
 if __name__ == '__main__':
     print("Seus processos vão ser calculados:")
     time.sleep(1)
     while True:
-
         myList = [10, 20, 15, 5, 10000000, 30]
         ranum1 = random.randint(0, 5)
         ranum2 = random.randint(0, 5)
@@ -67,22 +58,23 @@ if __name__ == '__main__':
 
         # If thread is still active
         if p1.is_alive():
-            print ("Deadlock encontrado, processo será encerrado")
+            print ("Deadlock encontrado, processo 1 será encerrado")
             # Terminate - may not work if process is stuck for good
             p1.terminate()
-            print("Recurso 1 liberado!")
-            # OR Kill - will work for sure, no chance for process to finish nicely however
-            # p.kill()
             p1.join()
+        else:
+            print("Recurso 1 liberado!")
         
-        elif p2.is_alive():
-            print ("Deadlock encontrado, processo será encerrado")
+        if p2.is_alive():
+            print ("Deadlock encontrado, processo 2 será encerrado")
             p2.terminate()
-            print("Recurso 2 liberado!")
             p2.join()
+        else:
+            print("Recurso 2 liberado!")
         
-        elif p3.is_alive():
-            print ("Deadlock encontrado, processo será encerrado")
+        if p3.is_alive():
+            print ("Deadlock encontrado, processo 3 será encerrado")
             p3.terminate()
-            print("Recurso 3 liberado!")
             p3.join()
+        else:
+            print("Recurso 3 liberado!")
